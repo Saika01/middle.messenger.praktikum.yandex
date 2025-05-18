@@ -6,7 +6,9 @@ export default defineConfig({
     build: {
         outDir: 'dist',
     },
-    plugins: [handlebars()],
+    plugins: [handlebars({
+        order: 'undefined'
+    })],
     css: {
         preprocessorOptions: {
             scss: {
