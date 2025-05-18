@@ -6,9 +6,13 @@ import * as Pages from './pages';
 const pages = {
   'login': [ Pages.LoginPage ],
   'signin': [ Pages.SignInPage ],
-  'error': [ Pages.Error, {
+  'error500': [ Pages.Error, {
     number: '500',
     message: 'Мы уже фиксим',
+  } ],
+  'error404': [ Pages.Error, {
+    number: '404',
+    message: 'Что-то пошло не так',
   } ],
   'chat': [ Pages.Chat, {
     dialogues: [
@@ -227,7 +231,43 @@ const pages = {
       }
     ],
   } ],
-  'changePassword': [ Pages.ChangePassword ]
+  'changePassword': [ Pages.ChangePassword ],
+  'navigation': [ Pages.Navigation, {
+    pages: [
+      {
+        systemName: 'login',
+        readableName: 'Login'
+      },
+      {
+        systemName: 'signin',
+        readableName: 'Sign-in'
+      },
+      {
+        systemName: 'error404',
+        readableName: '404'
+      },
+      {
+        systemName: 'error500',
+        readableName: '500'
+      },
+      {
+        systemName: 'chat',
+        readableName: 'Messages'
+      },
+      {
+        systemName: 'userProfile',
+        readableName: 'Profile'
+      },
+      {
+        systemName: 'changeUserProfile',
+        readableName: 'Change user information'
+      },
+      {
+        systemName: 'changePassword',
+        readableName: 'Change password'
+      }
+    ]
+  } ]
 };
 
 Object.entries(Components).forEach(([ name, template ]) => {
@@ -243,7 +283,7 @@ function navigate(page: string) {
   container.innerHTML = temlpatingFunction(context);
 }
 
-document.addEventListener('DOMContentLoaded', () => navigate('changePassword'));
+document.addEventListener('DOMContentLoaded', () => navigate('navigation'));
 
 document.addEventListener('click', e => {
   //@ts-ignore
