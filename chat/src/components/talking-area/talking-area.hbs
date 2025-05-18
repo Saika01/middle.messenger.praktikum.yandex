@@ -1,0 +1,23 @@
+<div class="talking-area__talk">
+    <div class="talk__profile">
+        <div class="talk__profile__info">
+            <div class="talk__profile__info__picture"></div>
+            <div class="talk__profile__info__name">{{talkingData.name}}</div>
+        </div>
+        <div class="talk__profile__menu"><img src="kebab.svg" alt="profile menu"></div>
+    </div>
+    <div class="talk__messages">
+        {{#each talkingData.messages}}
+            <div class="messages__message {{#if isMine}}messages__message--isMine{{/if}}">
+                <div class="message__text">{{message}}</div>
+                <div class="message__info">
+                    <div class="info__time {{#if isMine}}info__time--isMine{{/if}}">{{time}}</div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+    <div class="talk__send-interface">
+        <input type="text" placeholder="Сообщение" name="message" class="send-interface__field"></input>
+        <div class="send-interface__button"><img src="arrow-send.svg" alt="arrow"></div>
+    </div>
+</div>

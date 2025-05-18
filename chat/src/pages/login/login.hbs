@@ -1,0 +1,11 @@
+<form class="login">
+    <h1 class="login__header">Вход</h1>
+    <div class="login__fields">
+        {{> Input type="text" label="Логин" name="login"}}
+        {{> Input type="password" label="Пароль" name="password"}}
+    </div>
+    <div class="login__buttons">
+        <a href="#" page="chat">{{> Button type="confirm" text="Авторизоваться"}}</a>
+        <a href="#" page="signin">{{> Button type="cancel" text="Нет аккаунта?"}}</a>
+    </div>
+</form>

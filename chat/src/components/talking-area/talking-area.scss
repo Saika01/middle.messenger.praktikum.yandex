@@ -1,0 +1,102 @@
+.talking-area__talk {
+    width: 100%;
+    height: 100%;
+    color: #1e1e1e;
+    overflow: auto;
+}
+
+.talk__profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: #EAEAEA 1px solid;
+    position: sticky;
+    top: 0;
+    background: white;
+
+    &__info {
+        display: flex;
+        align-items: center;
+        gap:10px;
+
+        &__picture {
+            min-width: 34px;
+            height: 34px;
+            background-color: #EFEFEF;
+            border-radius: 100px;
+        }
+
+        &__name {
+            font-weight: 600;
+        }
+    }
+
+    &__menu {
+        min-width: 20px;
+        height: 20px;
+    }
+}
+
+
+.talk__messages {
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    margin: 30px 20px;
+}
+
+.messages__message {
+    max-width: 40%;
+    padding: 10px;
+    flex-wrap: wrap;
+    background-color: #F8F8F8;
+    border-radius: 12px;
+    border-top-left-radius: 0%;
+    line-height: 125%;
+    align-self: self-start;
+    text-align: left;
+
+    &--isMine {
+        background-color: #E4EDFD;
+        border-top-left-radius: 12px;
+        border-bottom-right-radius: 0%;
+        align-self: self-end;
+    }
+}
+
+.info__time {
+    font-weight: 500;
+    font-size: 9px;
+    text-align: right;
+    color: #999;
+
+    &--isMine {
+        font-size: 9px;
+        text-align: right;
+        color: #3369f3;
+    }
+}
+
+.talk__send-interface {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    display: flex;
+    gap:10px;
+    padding: 10px;
+}
+
+.send-interface__field {
+    color: #999;
+    background: #EFEFEF;
+    flex: 1;
+    text-align: left;
+    padding: 10px;
+    border: none;
+    border-radius: 50px;
+
+    &:focus {
+        outline: none;
+    } 
+}

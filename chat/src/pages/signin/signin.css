@@ -1,0 +1,29 @@
+.signin {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  padding: 50px 30px 20px;
+  height: 615px;
+  width: 340px;
+  border: none;
+  border-radius: 12px;
+  background: #FFF;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.14);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.signin__header {
+  font-size: 20px;
+  margin-bottom: 40px;
+}
+
+.signin__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/*# sourceMappingURL=signin.css.map */
