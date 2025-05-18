@@ -6,9 +6,15 @@ export default defineConfig({
     build: {
         outDir: 'dist',
     },
-    plugins: [handlebars({
-        order: 'undefined'
-    })],
+    plugins: [
+        {
+            ...handlebars(),
+            apply: 'serve',
+            transform(code) {
+                return code;
+            }
+        }
+    ],
     css: {
         preprocessorOptions: {
             scss: {
