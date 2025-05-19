@@ -8,7 +8,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "start": "npm run build && npm run preview",
-    "update:scss": "sass ./src/components/button/button.scss ./src/components/button/button.css && sass ./src/components/input/input.scss ./src/components/input/input.css && sass ./src/pages/profile/profile.scss ./src/pages/profile/profile.css && sass ./src/components/talking-area/talking-area.scss ./src/components/talking-area/talking-area.css && sass ./src/pages/change-profile/change-profile.scss ./src/pages/change-profile/change-profile.css && sass ./src/pages/change-password/change-password.scss ./src/pages/change-password/change-password.css && sass ./src/pages/navigation/navigation.scss ./src/pages/navigation/navigation.css && sass ./src/pages/error/error.scss ./src/pages/error/error.css"
+    "update:scss": "sass ./src/style.scss ./src/style.css && sass ./src/components/button/button.scss ./src/components/button/button.css && sass ./src/components/input/input.scss ./src/components/input/input.css && sass ./src/pages/profile/profile.scss ./src/pages/profile/profile.css && sass ./src/components/talking-area/talking-area.scss ./src/components/talking-area/talking-area.css && sass ./src/pages/change-profile/change-profile.scss ./src/pages/change-profile/change-profile.css && sass ./src/pages/change-password/change-password.scss ./src/pages/change-password/change-password.css && sass ./src/pages/navigation/navigation.scss ./src/pages/navigation/navigation.css && sass ./src/pages/error/error.scss ./src/pages/error/error.css"
   },
   "devDependencies": {
     "sass": "^1.87.0",

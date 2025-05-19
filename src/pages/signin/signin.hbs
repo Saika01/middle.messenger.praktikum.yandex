@@ -7,10 +7,10 @@
         {{> Input type="text" label="Фамилия" name="second_name"}}
         {{> Input type="text" label="Телефон" name="phone"}}
         {{> Input type="password" label="Пароль" name="password"}}
-        {{> Input type="password" label="Пароль (ещё раз)" name="password" errorText="Пароли не совпадают"}}
+        {{> Input type="password" label="Пароль (ещё раз)" name="" errorText="Пароли не совпадают"}}
     </div>
     <div class="signin__buttons">
-        <a href="#" page="chat">{{> Button type="confirm" text="Зарегистрироваться"}}</a>
-        <a href="#" page="login">{{> Button type="cancel" text="Войти"}}</a>
+        {{> Button type="confirm" text="Зарегистрироваться" isSubmit=true}}
+        {{> Button type="cancel" text="Войти"}}
     </div>
 </form>

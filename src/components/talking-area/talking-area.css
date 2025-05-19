@@ -25,6 +25,7 @@
   height: 34px;
   background-color: #EFEFEF;
   border-radius: 100px;
+  overflow: hidden;
 }
 .talk__profile__info__name {
   font-weight: 600;

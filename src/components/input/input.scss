@@ -5,46 +5,80 @@ $active-label-color: #4285f4;
 
 .input-container {
   position: relative;
+  width: 100%;
+  max-width: 300px;
 
-  input {
+  // input {
+  //   width: 100%;
+  //   padding: 10px 0;
+  //   border: none;
+  //   border-bottom: 1px solid $primary-color;
+  //   background: transparent;
+  //   font-size: 13px;
+  //   outline: none;
+  //   transition: border-color 0.3s;
+
+  //   &:focus {
+  //     border-bottom-color: $primary-color;
+  //   }
+
+  //   &.invalid {
+  //     color: $error-color;
+  //   }
+
+  //   &::placeholder {
+  //     opacity: 0;
+  //   }
+
+  //   &:focus + label,
+  //   &:not(:placeholder-shown) + label {
+  //     top: 0;
+  //     font-size: 12px;
+  //     color: $active-label-color;
+  //     transform: translateY(-7px) scale(0.8);
+  //   }
+  // }
+  .input-field {
     width: 100%;
     padding: 10px 0;
     border: none;
-    border-bottom: 1px solid $primary-color;
+    border-bottom: 2px solid #3369F3;
     background: transparent;
-    font-size: 13px;
+    font-size: 16px;
     outline: none;
-    transition: border-color 0.3s;
-
-    &:focus {
-      border-bottom-color: $primary-color;
-    }
-
-    &.invalid {
-      color: $error-color;
-    }
+    transition: all 0.3s ease;
 
     &::placeholder {
       opacity: 0;
     }
-
-    &:focus + label,
-    &:not(:placeholder-shown) + label {
-      top: 0;
-      font-size: 12px;
-      color: $active-label-color;
-      transform: translateY(-7px) scale(0.8);
-    }
   }
 
-  label {
+  .input-label {
     position: absolute;
-    top: 10px;
     left: 0;
-    color: $placeholder-color;
+    top: 10px;
+    color: #999;
     pointer-events: none;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     transform-origin: left center;
+  }
+
+  // label {
+  //   position: absolute;
+  //   top: 10px;
+  //   left: 0;
+  //   color: $placeholder-color;
+  //   pointer-events: none;
+  //   transition: all 0.3s;
+  //   transform-origin: left center;
+  // }
+
+  .input-field:focus + .input-label,
+  .input-field:not(:placeholder-shown) + .input-label {
+    top: -15px;
+    font-size: 12px;
+    color: #3369F3;
+    transform: scale(0.85);
   }
 
   .input-error {

@@ -29,7 +29,7 @@
   margin-top: 20px;
   gap: 20px;
 }
-.info__main__image {
+.info__main__image img {
   width: 130px;
   height: 130px;
   border: 100px;

@@ -5,7 +5,7 @@
         {{> Input type="password" label="Пароль" name="password"}}
     </div>
     <div class="login__buttons">
-        <a href="#" page="chat">{{> Button type="confirm" text="Авторизоваться"}}</a>
-        <a href="#" page="signin">{{> Button type="cancel" text="Нет аккаунта?"}}</a>
+        {{> Button type="confirm" text="Авторизоваться" isSubmit="true"}}
+        {{> Button type="cancel" text="Нет аккаунта?"}}
     </div>
 </form>

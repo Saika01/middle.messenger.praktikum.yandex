@@ -1,12 +1,16 @@
 <div class="profile">
-    <a href="#" page="userProfile"><div class="profile__back"><img src="arrow-send.svg" alt="arrow"></div></a>
-    <div class="profile__info">
+    <button class="profile__back"><img src="arrow-send.svg" alt="arrow"></button>
+    <form class="profile__info">
         <div class="info__main">
             <div class="info__main__image">
                 <img src="{{#if photo}}{{photo}}{{~else~}}profile-photo.svg{{/if}}" alt="photo">
                 <div class="info__main__image--change-image">Поменять аватар</div>
             </div>
             <div class="info__main__name">{{name}}</div>
+        </div>
+        <div class="info__main__image__modal">
+            <h2 class="image__modal__header">Изменить фото профиля</h2>
+            {{> Input type="file" label="Выбрать изображение" name="avatar"}}
         </div>
         <div class="info__description">
             {{~#each profileDescription}}
@@ -16,8 +20,6 @@
                 </div>
             {{/each}}
         </div>
-        <a href="#" page="userProfile">
-            {{> Button type="confirm" text="Сохранить"}}
-        </a>
-    </div>
+        {{> Button type="confirm" text="Сохранить" isSubmit=true}}
+    </form>
 </div>

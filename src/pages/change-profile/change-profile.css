@@ -16,10 +16,14 @@
   transform: rotate(0.5turn);
 }
 .profile__info {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 60px;
   flex: 1;
+}
+.profile__info button {
+  align-self: center;
 }
 
 .info__main {
@@ -29,7 +33,7 @@
   margin-top: 20px;
   gap: 20px;
 }
-.info__main__image {
+.info__main__image img {
   width: 130px;
   height: 130px;
   border: 100px;
@@ -49,10 +53,32 @@
 .info__main__image--change-image:hover {
   display: inline;
 }
+.info__main__image__modal {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 200px);
+  margin: auto 0;
+  padding: 20px;
+  height: 200px;
+  width: 400px;
+  border: none;
+  border-radius: 12px;
+  background: #FFF;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.14);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .info__main__name {
   font-weight: 600;
   font-size: 16px;
   text-align: center;
+}
+
+.image__modal__header {
+  font-size: 20px;
 }
 
 .info__description {

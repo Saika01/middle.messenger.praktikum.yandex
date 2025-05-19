@@ -1,5 +1,5 @@
 <div class="profile">
-    <a href="#" page="chat"><div class="profile__back"><img src="arrow-send.svg" alt="arrow"></div></a>
+    <button class="profile__back"><img src="arrow-send.svg" alt="arrow"></button>
     <div class="profile__info">
         <div class="info__main">
             <div class="info__main__image"><img src="{{#if photo}}{{photo}}{{~else~}}profile-photo.svg{{/if}}" alt="photo"></div>
@@ -14,9 +14,9 @@
             {{/each}}
         </div>
         <div class="info__manage-buttons">
-            <a href="#" page="changeUserProfile">{{> Button type="line" text="Изменить данные" color="blue"}}</a>
-            <a href="#" page="changePassword">{{> Button type="line" text="Изменить пароль" color="blue"}}</a>
-            <a href="#" page="login">{{> Button type="line" text="Выйти" color="red"}}</a>
+            {{> Button type="line" text="Изменить данные" color="blue"}}
+            {{> Button type="line" text="Изменить пароль" color="blue"}}
+            {{> Button type="line" text="Выйти" color="red"}}
         </div>
     </div>
 </div>
