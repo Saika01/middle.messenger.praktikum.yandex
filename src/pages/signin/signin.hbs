@@ -1,0 +1,16 @@
+<form class="signin">
+    <div class="signin__fields">
+        <h1 class="signin__header">Регистрация</h1>
+        {{> Input type="text" label="Почта" name="email"}}
+        {{> Input type="text" label="Логин" name="login"}}
+        {{> Input type="text" label="Имя" name="first_name"}}
+        {{> Input type="text" label="Фамилия" name="second_name"}}
+        {{> Input type="text" label="Телефон" name="phone"}}
+        {{> Input type="password" label="Пароль" name="password"}}
+        {{> Input type="password" label="Пароль (ещё раз)" name="" errorText="Пароли не совпадают"}}
+    </div>
+    <div class="signin__buttons">
+        {{> Button type="confirm" text="Зарегистрироваться" isSubmit=true}}
+        {{> Button type="cancel" text="Войти"}}
+    </div>
+</form>

@@ -1,0 +1,22 @@
+<div class="profile">
+    <button class="profile__back"><img src="arrow-send.svg" alt="arrow"></button>
+    <div class="profile__info">
+        <div class="info__main">
+            <div class="info__main__image"><img src="{{#if photo}}{{photo}}{{~else~}}profile-photo.svg{{/if}}" alt="photo"></div>
+            <div class="info__main__name">{{name}}</div>
+        </div>
+        <div class="info__description">
+            {{~#each profileDescription}}
+                <div class="description__line">
+                    <div class="description__line__attribute">{{attribute}}</div>
+                    <div class="description__line__value">{{value}}</div>
+                </div>
+            {{/each}}
+        </div>
+        <div class="info__manage-buttons">
+            {{> Button type="line" text="Изменить данные" color="blue"}}
+            {{> Button type="line" text="Изменить пароль" color="blue"}}
+            {{> Button type="line" text="Выйти" color="red"}}
+        </div>
+    </div>
+</div>
