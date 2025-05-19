@@ -286,8 +286,12 @@ function navigate(page: string) {
 document.addEventListener('DOMContentLoaded', () => navigate('navigation'));
 
 document.addEventListener('click', e => {
-  //@ts-ignore
-  const page = !!e.target.closest('a') && e.target.closest('a').getAttribute('page');
+  const {target} = e;
+  if (!(target instanceof HTMLElement)) {
+    return;
+  }
+
+  const page = target.closest('a')?.getAttribute('page');
   if (page) {
     navigate(page);
 
