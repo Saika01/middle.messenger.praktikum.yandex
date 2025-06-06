@@ -20,7 +20,11 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "paths": {
+      "vite-plugin-handlebars": ["node_modules/vite-plugin-handlebars"]
+    },
+    "typeRoots": ["node_modules/@types", "src/types"]
   },
-  "include": ["src"]
+  "include": ["src", "vite-plugin-handlebars.d.ts"]
 }

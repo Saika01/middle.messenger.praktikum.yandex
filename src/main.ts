@@ -3,7 +3,7 @@ import Handlebars from 'handlebars'
 import * as Components from './components';
 import * as Pages from './pages';
 
-const pages = {
+const pages: Record<string, [string, object?]> = {
   'login': [ Pages.LoginPage ],
   'signin': [ Pages.SignInPage ],
   'error500': [ Pages.Error, {
@@ -275,12 +275,25 @@ Object.entries(Components).forEach(([ name, template ]) => {
 });
 
 function navigate(page: string) {
-  //@ts-ignore
   const [ source, context ] = pages[page];
   const container = document.getElementById('app')!;
 
   const temlpatingFunction = Handlebars.compile(source);
   container.innerHTML = temlpatingFunction(context);
+  
+  const forms = document.querySelectorAll('form');
+  console.log(forms)
+  forms.forEach(form => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+
+      console.log(data);
+    })
+  })
 }
 
 document.addEventListener('DOMContentLoaded', () => navigate('navigation'));
