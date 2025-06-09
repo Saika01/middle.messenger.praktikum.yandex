@@ -76,7 +76,6 @@ export abstract class Block {
             if (Array.isArray(value)) {
                 if (value.every((item) => item instanceof Block)) {
                     children[key] = value;
-                    // value.forEach(item => children[key] = item);
                 } else {
                     props[key] = value;
                 }
@@ -134,49 +133,12 @@ export abstract class Block {
     }
 
     _compile(template: string, props: { [key: string] : any }) {
-        // const propsAndStubs = { ...props };
         const original = this._meta.propsAndChildren;
         const propsAndStubs = this._buildPropsWithStubs(original);
-
-        // Object.entries(props).forEach(([key, value]) => {
-        //     propsAndStubs[key] = value;
-        //     // if (Array.isArray(child)) {
-        //     //     propsAndStubs[key] = child.map((component) => `<div data-id="${component._id}"></div>`);
-        //     // } else {
-        //     //     propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
-        //     // }
-        // });
-
-
-        // Object.entries(this.children).forEach(([key, child]) => {
-        //     if (Array.isArray(child)) {
-        //         propsAndStubs[key] = child.map(component => `<div data-id="${component._id}" class="wrapper"></div>`);
-        //     } else {
-        //         propsAndStubs[key] = `<div data-id="${child._id}" class="wrapper"></div>`;
-        //     }
-        // });
 
         const fragment = this._createDocumentElement('template') as HTMLTemplateElement;
         const templator = Handlebars.compile(template, props);
         fragment.innerHTML = templator(propsAndStubs);
-
-        // Object.values(this.children).forEach((child) => {
-        //     if (Array.isArray(child)) {
-        //         child.forEach((component) => {
-        //             const stub = fragment.content.querySelector(`[data-id="${component._id}"]`);
-        //             const content = component.getContent();
-        //             if (stub && content) {
-        //                 stub.replaceWith(content);
-        //             }
-        //         });
-        //     } else {
-        //         const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
-        //         const content = child.getContent();
-        //         if (stub && content) {
-        //             stub.replaceWith(content);
-        //         }
-        //     }
-        // });
 
         this._replaceStubsWithContent(fragment);
 
@@ -236,9 +198,6 @@ export abstract class Block {
     _addEvents() {
         const events = this.props.events as Record<string, (e: Event) => void> | undefined;
         if (!events) return;
-        // Object.keys(events).forEach((eventName) => {
-        //     this._element && this._element.addEventListener(eventName, events[eventName]);
-        // });
 
         Object.entries(events).forEach(([eventSelector, handler]) => {
             const [event, ...selectorParts] = eventSelector.split(' ');
@@ -260,10 +219,6 @@ export abstract class Block {
     }
 
     _removeEvents() {
-        // const { events = {} } = this.props;
-        // Object.keys(events).forEach((eventName) => {
-        //     this._element && this._element.removeEventListener(eventName, events[eventName]);
-        // });
         this._listeners.forEach(({ element, event, handler }) => {
             element.removeEventListener(event, handler);
         });

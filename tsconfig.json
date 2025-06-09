@@ -21,9 +21,6 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    // "paths": {
-    //   "vite-plugin-handlebars": ["node_modules/vite-plugin-handlebars"]
-    // },
     "typeRoots": ["node_modules/@types", "src/types"]
   },
   "include": ["src"],
