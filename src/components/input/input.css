@@ -32,19 +32,5 @@
   color: #3369F3;
   transform: scale(0.85);
 }
-.input-container .input-error {
-  margin-top: 7px;
-  color: #FF2F2F;
-  font-size: 8px;
-  font-weight: 400;
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition: opacity 0.3s, max-height 0.3s;
-}
-input.invalid ~ .input-container .input-error {
-  opacity: 1;
-  max-height: 20px;
-}
 
 /*# sourceMappingURL=input.css.map */

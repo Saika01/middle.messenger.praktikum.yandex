@@ -10,7 +10,7 @@ body {
   padding: 0;
   color: #1E1E1E;
   text-align: center;
-  font-family: Inter;
+  font-family: Inter, sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
@@ -26,6 +26,22 @@ body {
 button {
   background: transparent;
   border: none;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.invalid {
+  border-color: red;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
 }
 
 /*# sourceMappingURL=style.css.map */

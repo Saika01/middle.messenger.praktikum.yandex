@@ -1,10 +1,9 @@
-import './change-password.css'
-export { default as ChangePassword } from './change-password.hbs?raw';
-import { Block } from '../../block.ts';
-import { ChangePassword } from './index.ts';
+import './change-password.css';
+import { Block } from '../../core/block.ts';
+import template from './change-password.hbs?raw';
 
-export class ChangePasswordPage extends Block {
+export class ChangePassword extends Block {
     render() {
-        return this._compile(ChangePassword, {});
+        return this._compile(template, this.props);
     }
 }

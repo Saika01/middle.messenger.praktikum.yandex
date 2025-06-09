@@ -10,16 +10,16 @@
         </div>
         <div class="info__main__image__modal">
             <h2 class="image__modal__header">Изменить фото профиля</h2>
-            {{> Input type="file" label="Выбрать изображение" name="avatar"}}
+            {{{ avatarInput }}}
         </div>
         <div class="info__description">
             {{~#each profileDescription}}
                 <div class="info__description__container">
-                    {{> Input type="text" label=attribute name=name}}
-                    <p class="description__container__value">{{value}}</p>
+                    {{{ this.input }}}
+                    <p class="description__container__value">{{this.value}}</p>
                 </div>
             {{/each}}
         </div>
-        {{> Button type="confirm" text="Сохранить" isSubmit=true}}
+        {{{ saveButton }}}
     </form>
 </div>

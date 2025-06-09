@@ -21,10 +21,11 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    "paths": {
-      "vite-plugin-handlebars": ["node_modules/vite-plugin-handlebars"]
-    },
+    // "paths": {
+    //   "vite-plugin-handlebars": ["node_modules/vite-plugin-handlebars"]
+    // },
     "typeRoots": ["node_modules/@types", "src/types"]
   },
-  "include": ["src", "vite-plugin-handlebars.d.ts"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }
