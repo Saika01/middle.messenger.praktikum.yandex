@@ -1,0 +1,34 @@
+$primary-color: #3369F3;
+
+.button {
+  width: 280px;
+  height: 37px;
+  border-radius: 8px;
+  border: none;
+
+  &-confirm {
+    background-color: $primary-color;
+    color: #FFF;
+  }
+
+  &-cancel {
+    background-color: transparent;
+    color: $primary-color;
+  }
+
+  &-line {
+    border-radius: 0;
+    border-bottom: 1px solid #EAEAEA;
+    text-align: left;
+    width: 510px;
+    background: transparent;
+  }
+
+  &--red {
+    color: #FF0000;
+  }
+
+  &--blue {
+    color: $primary-color;
+  }
+}

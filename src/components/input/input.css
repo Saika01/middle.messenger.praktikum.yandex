@@ -1,0 +1,50 @@
+.input-container {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+}
+.input-container .input-field {
+  width: 100%;
+  padding: 10px 0;
+  border: none;
+  border-bottom: 2px solid #3369F3;
+  background: transparent;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+.input-container .input-field::placeholder {
+  opacity: 0;
+}
+.input-container .input-label {
+  position: absolute;
+  left: 0;
+  top: 10px;
+  color: #999;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  transform-origin: left center;
+}
+.input-container .input-field:focus + .input-label,
+.input-container .input-field:not(:placeholder-shown) + .input-label {
+  top: -15px;
+  font-size: 12px;
+  color: #3369F3;
+  transform: scale(0.85);
+}
+.input-container .input-error {
+  margin-top: 7px;
+  color: #FF2F2F;
+  font-size: 8px;
+  font-weight: 400;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s, max-height 0.3s;
+}
+input.invalid ~ .input-container .input-error {
+  opacity: 1;
+  max-height: 20px;
+}
+
+/*# sourceMappingURL=input.css.map */

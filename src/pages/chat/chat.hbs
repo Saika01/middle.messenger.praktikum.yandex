@@ -1,0 +1,32 @@
+<div class="chat">
+    <div class="chat__managing-area">
+        <div class="managing-area__menu">
+            <a href="#" page="userProfile"><div class="menu__profile">Профиль<img src="arrow.svg" alt="arrow"></div></a>
+            <div class="menu_search"><img src="magnifier.svg" alt="magnifier">Поиск</div>
+        </div>
+        <div class="managing-area__dialogues">
+            {{#each dialogues}}
+                <div class="dialogues__dialogue {{#if isCurrent}}dialogues__dialogue--isCurrent{{/if}}">
+                    <div class="dialogue__picture"></div>
+                    <div class="dialogue__info">
+                        <div class="info__name-and-time">
+                            <div class="name-and-time__name">{{name}}</div>
+                            <div class="name-and-time__time">{{time}}</div>
+                        </div>
+                        <div class="info__message-info">
+                            <div class="message-info__message">{{#if isYou}}<span>Вы:&nbsp;</span>{{/if}}{{message}}</div>
+                            {{#if isShowQuantity}}<div class="message-info__quantity">{{quantity}}</div>{{/if}}
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="chat__talking-area">
+        {{#if isMock}}
+            <div class="talking-area__mock">Выберите чат чтобы отправить сообщение</div>
+        {{else}}
+            {{> TalkingArea talkingData=talkingData}}
+        {{/if}}
+    </div>
+</div>
