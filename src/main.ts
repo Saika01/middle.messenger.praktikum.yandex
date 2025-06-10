@@ -26,10 +26,7 @@ const pages: Record<string, [BlockClass, {[key:string]: Block | Object}]> = {
         registerButton: new Components.Button({
             type: 'cancel',
             text: 'Нет аккаунта?'
-        }),
-        events: {
-            'submit form': consoleFormData
-        }
+        })
     }],
     signin: [Pages.SignInPage, {
         mailInput: new Components.Input({
@@ -75,10 +72,7 @@ const pages: Record<string, [BlockClass, {[key:string]: Block | Object}]> = {
         logInButton: new Components.Button({
             type: 'cancel',
             text: 'Войти'
-        }),
-        events: {
-            'submit form': consoleFormData
-        }
+        })
     }],
     error500: [Pages.Error, {
         number: '500',
@@ -237,10 +231,7 @@ const pages: Record<string, [BlockClass, {[key:string]: Block | Object}]> = {
                     time: '12:08',
                 },
             ],
-        }}),
-        events: {
-            'submit form': consoleFormData
-        }
+        }})
     }],
     userProfile: [Pages.Profile, {
         photo: false,
@@ -349,10 +340,7 @@ const pages: Record<string, [BlockClass, {[key:string]: Block | Object}]> = {
             type: 'confirm',
             text: 'Сохранить',
             isSubmit: true
-        }),
-        events: {
-            'submit form': consoleFormData
-        }
+        })
     }],
     changePassword: [Pages.ChangePassword, {
         oldPasswordInput: new Components.Input({
@@ -369,10 +357,7 @@ const pages: Record<string, [BlockClass, {[key:string]: Block | Object}]> = {
             type: 'confirm',
             text: 'Сохранить',
             isSubmit: true
-        }),
-        events: {
-            'submit form': consoleFormData
-        }
+        })
     }],
     navigation: [Pages.Navigation, {
         pages: [
@@ -411,14 +396,6 @@ const pages: Record<string, [BlockClass, {[key:string]: Block | Object}]> = {
         ],
     }],
 };
-
-function consoleFormData(event: Event) {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
-    const formValues = Object.fromEntries(formData.entries());
-    console.log(formValues);
-}
 
 function navigate(page: string) {
     const [PageClass, props] = pages[page];

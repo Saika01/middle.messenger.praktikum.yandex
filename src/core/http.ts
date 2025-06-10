@@ -5,20 +5,22 @@ const METHODS = {
     DELETE: 'DELETE',
 };
 
-function queryStringify(data: Record<string, any>): string {
-    if (typeof data !== 'object') {
+function queryStringify(data: Record<string, string | number | boolean>): string {
+    if (typeof data !== 'object' || data === null) {
         throw new Error('Data must be object');
     }
 
     const keys = Object.keys(data);
     return keys.reduce((result, key, index) => {
-        return `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`;
+        const encodedKey = encodeURIComponent(key);
+        const encodedValue = encodeURIComponent(data[key]);
+        return `${result}${encodedKey}=${encodedValue}${index < keys.length - 1 ? '&' : ''}`;
     }, '?');
 }
 
 type HTTPTransportOptions = {
   headers?: Record<string, string>;
-  data?: any;
+  data?: Record<string, unknown> | FormData | URLSearchParams | string;
   timeout?: number;
 };
 
@@ -55,6 +57,10 @@ export class HTTPTransport {
         );
     }
 
+    isPlainObject(data: unknown): data is Record<string, unknown> {
+        return typeof data === 'object' && data !== null && !(data instanceof FormData) && !(data instanceof URLSearchParams);
+    }
+
     request(
         url: string,
         options: HTTPTransportOptions & { method: string },
@@ -71,10 +77,16 @@ export class HTTPTransport {
             const xhr = new XMLHttpRequest();
             const isGet = method === METHODS.GET;
 
-            xhr.open(
-                method,
-                isGet && data ? `${url}${queryStringify(data)}` : url
-            );
+            let requestUrl = url;
+            if (isGet && data) {
+                if (this.isPlainObject(data)) {
+                    requestUrl = `${url}${queryStringify(data as Record<string, string | number | boolean>)}`;
+                } else if (typeof data === 'string') {
+                    requestUrl = `${url}?${data}`;
+                }
+            }
+
+            xhr.open(method, requestUrl);
 
             Object.keys(headers).forEach((key) => {
                 xhr.setRequestHeader(key, headers[key]);
@@ -93,7 +105,7 @@ export class HTTPTransport {
             if (isGet || !data) {
                 xhr.send();
             } else {
-                xhr.send(data);
+                xhr.send(data as XMLHttpRequestBodyInit);
             }
         });
     }

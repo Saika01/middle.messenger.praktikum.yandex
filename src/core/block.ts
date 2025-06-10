@@ -2,19 +2,20 @@ import Handlebars from 'handlebars';
 import { v4 as makeUUID } from 'uuid';
 import { EventBus } from './event';
 
+type Props = Record<string, unknown>;
 export abstract class Block {
     static EVENTS = {
         INIT: 'init',
         FLOW_CDM: 'flow:component-did-mount',
         FLOW_CDU: 'flow:component-did-update',
         FLOW_RENDER: 'flow:render',
-    };
+    } as const;
 
-    protected props: Record<string, any>;
+    protected props: Props;
     protected children: Record<string, Block | Block[]>;
     private eventBus: () => EventBus;
     private _element: HTMLElement | null = null;
-    private _meta: { tagName: string, propsAndChildren: Record<string, any> };
+    private _meta: { tagName: string, propsAndChildren: Props };
     private _id: string = '';
     private _listeners: Array<{
         element: HTMLElement,
@@ -22,7 +23,7 @@ export abstract class Block {
         handler: EventListener,
     }> = [];
 
-    constructor(propsAndChildren: Object = {}, tagName: string = 'div') {
+    constructor(propsAndChildren = {}, tagName = 'div') {
         const { children, props } = this._getChildrenAndProps(propsAndChildren);
         this.children = children;
 
@@ -57,6 +58,7 @@ export abstract class Block {
         }
 
         if (typeof this.props.attr === 'object') {
+            if (this.props.attr === null) return;
             Object.entries(this.props.attr).forEach(([attrName, attrValue]) => {
                 (this._element as HTMLElement).setAttribute(attrName, attrValue as string);
             });
@@ -68,9 +70,9 @@ export abstract class Block {
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
 
-    _getChildrenAndProps(propsAndChildren: Record<string, any>) {
+    _getChildrenAndProps(propsAndChildren: Props) {
         const children: Record<string, Block | Block[]> = {};
-        const props: Record<string, any> = {};
+        const props: Props = {};
 
         Object.entries(propsAndChildren).forEach(([key, value]) => {
             if (Array.isArray(value)) {
@@ -106,7 +108,7 @@ export abstract class Block {
 
     componentDidMount() {}
 
-    _componentDidUpdate(oldProps: Record<string, any>, newProps: Record<string, any>) {
+    _componentDidUpdate(oldProps: Props, newProps: Props) {
         const response = this.componentDidUpdate(oldProps, newProps);
         if (!response) {
             return;
@@ -114,13 +116,13 @@ export abstract class Block {
         this._render();
     }
 
-    componentDidUpdate(oldProps: Record<string, any>, newProps: Record<string, any>) {
+    componentDidUpdate(oldProps: Props, newProps: Props) {
         void oldProps;
         void newProps;
         return true;
     }
 
-    setProps = (nextProps: Record<string, any>) => {
+    setProps = (nextProps: Props) => {
         if (!nextProps) {
             return;
         }
@@ -132,7 +134,7 @@ export abstract class Block {
         return this._element;
     }
 
-    _compile(template: string, props: { [key: string] : any }) {
+    _compile(template: string, props: Props) {
         const original = this._meta.propsAndChildren;
         const propsAndStubs = this._buildPropsWithStubs(original);
 
@@ -145,7 +147,7 @@ export abstract class Block {
         return fragment.content;
     }
 
-    _buildPropsWithStubs(obj: any): any {
+    _buildPropsWithStubs(obj: unknown): unknown {
         if (obj instanceof Block) {
             return `<div data-id="${obj._id}" class="wrapper"></div>`;
         }
@@ -155,7 +157,7 @@ export abstract class Block {
         }
 
         if (typeof obj === 'object' && obj !== null) {
-            const result: any = {};
+            const result: Record<string, unknown> = {};
             for (const [key, value] of Object.entries(obj)) {
                 result[key] = this._buildPropsWithStubs(value);
             }
@@ -166,7 +168,7 @@ export abstract class Block {
     }
 
     private _replaceStubsWithContent(fragment: HTMLTemplateElement) {
-        const replace = (obj: any) => {
+        const replace = (obj: unknown) => {
             if (obj instanceof Block) {
                 const stub = fragment.content.querySelector(`[data-id="${obj._id}"]`);
                 const content = obj.getContent();
@@ -231,7 +233,7 @@ export abstract class Block {
         return this.element;
     }
 
-    _makePropsProxy(props: Record<string, any>) {
+    _makePropsProxy(props: Props) {
         const self = this;
 
         return new Proxy(props, {

@@ -66,7 +66,11 @@ export function setupFormValidation(form: HTMLFormElement) {
         });
             
         if (isFormValid) {
-            form.submit();
+            const form = e.target as HTMLFormElement;
+            const formData = new FormData(form);
+            const formValues = Object.fromEntries(formData.entries());
+            console.log(formValues);
+            // form.submit();
         }
     });
 }
