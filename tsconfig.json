@@ -6,7 +6,6 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
 
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "baseUrl": "./src",
     "allowImportingTsExtensions": true,
@@ -14,13 +13,17 @@
     "moduleDetection": "force",
     "noEmit": true,
 
-    /* Linting */
     "strict": true,
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "typeRoots": ["node_modules/@types", "src/types"]
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }
