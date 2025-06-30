@@ -69,6 +69,10 @@ export function setupFormValidation(form: HTMLFormElement) {
             const form = e.target as HTMLFormElement;
             const formData = new FormData(form);
             const formValues = Object.fromEntries(formData.entries());
+            // await userLoginController.login({
+            //     login: formValues.login,
+            //     password: formValues.password
+            // });
             console.log(formValues);
             // form.submit();
         }

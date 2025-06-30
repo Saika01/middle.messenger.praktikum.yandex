@@ -18,13 +18,19 @@ function queryStringify(data: Record<string, string | number | boolean>): string
     }, '?');
 }
 
-type HTTPTransportOptions = {
+export type HTTPTransportOptions = {
   headers?: Record<string, string>;
-  data?: Record<string, unknown> | FormData | URLSearchParams | string;
+  data?: unknown;
   timeout?: number;
 };
 
 export class HTTPTransport {
+    endpoint: string;
+    
+    constructor(endpoint: string) {
+        this.endpoint = endpoint;
+    }
+
     get(url: string, options: HTTPTransportOptions = {}): Promise<XMLHttpRequest> {
         return this.request(
             url,
@@ -101,11 +107,15 @@ export class HTTPTransport {
             xhr.ontimeout = reject;
 
             xhr.timeout = timeout;
+            xhr.withCredentials = true;
 
             if (isGet || !data) {
                 xhr.send();
+            } else if (data instanceof FormData) {
+                xhr.send(data);
             } else {
-                xhr.send(data as XMLHttpRequestBodyInit);
+                xhr.setRequestHeader('Content-type', 'application/json');
+                xhr.send(JSON.stringify(data));
             }
         });
     }

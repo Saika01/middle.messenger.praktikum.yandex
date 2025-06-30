@@ -12,6 +12,7 @@ export abstract class Block {
     } as const;
 
     protected props: Props;
+    // protected template: string;
     protected children: Record<string, Block | Block[]>;
     private eventBus: () => EventBus;
     private _element: HTMLElement | null = null;
@@ -26,6 +27,7 @@ export abstract class Block {
     constructor(propsAndChildren = {}, tagName = 'div') {
         const { children, props } = this._getChildrenAndProps(propsAndChildren);
         this.children = children;
+        // this.template = template;
 
         const eventBus = new EventBus();
         this.eventBus = () => eventBus;
@@ -120,6 +122,13 @@ export abstract class Block {
         void oldProps;
         void newProps;
         return true;
+    }
+
+    getProps(): Record<string, any> {
+        return {
+            ...this.props,
+            events: this.props.events
+        };
     }
 
     setProps = (nextProps: Props) => {
@@ -227,9 +236,9 @@ export abstract class Block {
         this._listeners = [];
     }
 
-    protected abstract render(): DocumentFragment;
+    abstract render(): DocumentFragment;
 
-    getContent() {
+    getContent(): HTMLElement | null {
         return this.element;
     }
 
@@ -267,3 +276,5 @@ export abstract class Block {
         this.getContent()!.style.display = 'none';
     }
 }
+
+// export type BlockType = InstanceType<typeof Block>;
