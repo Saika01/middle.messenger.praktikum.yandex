@@ -137,6 +137,10 @@ export abstract class Block {
         }
 
         Object.assign(this.props, nextProps);
+
+        if (this.eventBus) {
+            this.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...this.props }, this.props);
+        }
     };
 
     get element() {
@@ -236,7 +240,9 @@ export abstract class Block {
         this._listeners = [];
     }
 
-    abstract render(): DocumentFragment;
+    render(): DocumentFragment {
+        throw new Error('Render method must be implemented');
+    };
 
     getContent(): HTMLElement | null {
         return this.element;

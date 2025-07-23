@@ -2,7 +2,7 @@ const ROUTER =  {
     login: '/login',
     cats: '/cats',
 };
-import AuthApi from "../api/auth";
+import AuthApi from '../api/auth';
 
 const authApi = new AuthApi();
 

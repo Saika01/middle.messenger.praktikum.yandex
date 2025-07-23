@@ -1,85 +1,15 @@
-// import { LoginAPI } from './login';
-// import { Router } from '../../core/router';
-// import { Store } from '../../core/store';
-
-// // interface LoginFormModel {
-// //   email: string;
-// //   password: string;
-// // }
-
-// const loginApi = new LoginAPI();
-// const router = new Router('#app');
-// const store = new Store({
-//     isLoading: false,
-//     user: null,
-//     loginError: null,
-//     // other initial state properties
-// });
-
-// class UserLoginController {
-//     public async login(data: { login: string; password: string }) {
-//         try {
-//             store.set({'isLoading': true});
-            
-//             const response = await loginApi.create(data);
-
-//             if (response.status === 200) {
-//                 const userData = JSON.parse(response.responseText);
-//                 store.set({ user: userData });
-//                 router.go('/chat');
-//             } else {
-//                 const errorData = JSON.parse(response.responseText);
-//                 store.set({ loginError: errorData.reason || 'Login failed' });
-//             }
-//         } catch (error) {
-//             console.error('Login failed:', error);
-//             store.set({'loginError': 'Connection error'});
-//         } finally {
-//             store.set({'isLoading': false});
-//         }
-//     }
-// }
-
-// export const userLoginController = new UserLoginController();
-
-// // const userLoginValidator = validateLoginFields(validateRules);
-
-// // class UserLoginController {
-// //     public async login(data: LoginFormModel) {
-// //         try {
-// //             // Запускаем крутилку            
-
-// //             const validateData = userLoginValidator(data);
-
-// //             if (!validateData.isCorrect) {
-// //                 throw new Error(validateData);
-// //             }
-        
-// //             const userID = loginApi.request(prepareDataToRequest(data));
-
-// //             RouteManagement.go('/chats');
-
-// //             // Останавливаем крутилку
-// //         } catch (error) {
-// //             // Логика обработки ошибок
-// //         }
-// //     }
-// // }
-
-// // c декораторами
-
-// // class UserLoginController {
-// //     @validate(userLoginValidateRules)
-// //     @handleError(handler)
-// //     public async login(data: LoginFormModel) {
-// //         const userID = loginApi.request(prepareDataToRequest(data));
-// //         RouteManagement.go('/chats');
-// //     }
-// // }
-
-
 import AuthApi from '../../api/auth';
+// import UserApi from '../../api/user';
 import { Store } from '../../core/store';
+
+class LoginError extends Error {
+    status?: number;
+
+    constructor(message: string, status?: number) {
+        super(message);
+        this.status = status;
+    }
+}
 
 export class LoginController {
     private api: AuthApi;
@@ -91,23 +21,51 @@ export class LoginController {
     }
 
     async login(data: { login: string; password: string }) {
+        let response;
         try {
-            const response = await this.api.login(data);
+            response = await this.api.login(data);
 
-            if (response.status === 200) {
-                // Успешная авторизация
-                this.store.set({ user: JSON.parse(response.responseText) });
-                window.router.go('/chat'); // Перенаправляем в чат
-            } else {
-                // Ошибка авторизации
-                const error = JSON.parse(response.responseText).reason;
-                this.store.set({ loginError: error });
+            if (response.status !== 200) {
+                const errorCastom = new LoginError(JSON.parse(response.responseText).reason, response.status);
+                throw errorCastom;
             }
+
+            try {
+                const response = await this.api.user();
+                this.store.set({ user: response });
+                window.router.go('/messenger');
+            } catch (error) {
+                console.error('Get user info:', error);
+                this.store.set({ error: 'Ошибка соединения' });
+            }
+
         } catch (error) {
             console.error('Login error:', error);
-            this.store.set({ loginError: 'Ошибка соединения' });
+            let errorMessage = 'Ошибка соединения';
+
+            if (error instanceof LoginError) {
+                errorMessage = error.message;
+                
+                if (error.status === 401) {
+                    errorMessage = 'Неверный логин или пароль';
+                    window.router.go('/sign-up');
+                }
+            }
+
+            this.store.set({ error: errorMessage });
+        }
+    }
+
+    async logout() {
+        try {
+            await this.api.logout();
+            this.store.set({ user: null });
+            window.router.go('/');
+        } catch(error) {
+            console.error('Logout:', error);
+            this.store.set({ error: 'Ошибка соединения' });
         }
     }
 }
 
-export const loginController = new LoginController();
+// export const loginController = new LoginController();

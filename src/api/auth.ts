@@ -12,10 +12,7 @@ const authApi = new HTTPTransport('/auth');
 export default class AuthApi {
     async create(data: CreateUser): Promise<SignUpResponse> {
         const response = await authApi.post('/signup', { 
-            data: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            data: data
         });
         
         if (response.status !== 200) {
@@ -25,25 +22,16 @@ export default class AuthApi {
         return JSON.parse(response.responseText) as SignUpResponse;
     }
 
-    async login(data: LoginRequestData): Promise<void> {
+    async login(data: LoginRequestData): Promise<XMLHttpRequest> {
         const response = await authApi.post('/signin', { 
-            data: JSON.stringify(data),
-            headers: { 
-                'Content-Type': 'application/json',
-            },
+            data: data
         });
-        
-        if (response.status !== 200) {
-            throw new Error(JSON.parse(response.responseText).reason);
-        }
+
+        return response;
     }
 
-    async me(): Promise<UserDTO> {
-        const response = await authApi.get('/user', {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+    async user(): Promise<UserDTO> {
+        const response = await authApi.get('/user');
         
         if (response.status !== 200) {
             throw new Error(JSON.parse(response.responseText).reason);

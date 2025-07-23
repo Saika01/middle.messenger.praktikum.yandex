@@ -11,11 +11,16 @@ export class EventBus {
         }
 
         this.listeners[event].push(callback);
+        
+        return () => {
+            this.off(event, callback);
+        };
     }
 
     off(event: string, callback: Function) {
         if (!this.listeners[event]) {
-            throw new Error(`Нет события: ${event}`);
+            // throw new Error(`Нет события: ${event}`);
+            return;
         }
 
         this.listeners[event] = this.listeners[event].filter(

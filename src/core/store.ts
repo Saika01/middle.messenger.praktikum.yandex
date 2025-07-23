@@ -30,14 +30,15 @@ export const StoreEvents = {
 type State = {
     isLoading: boolean;
     user: null | Record<string, unknown>;
-    loginError: null | string;
+    error: null | string;
+    dialogues?: unknown[]
 };
 
 export class Store extends EventBus {
     private state: State = {
         isLoading: false,
         user: null,
-        loginError: null,
+        error: null,
     };
     private static __instance: Store;
 
@@ -48,8 +49,6 @@ export class Store extends EventBus {
         super();
 
         this.state = defaultState;
-        // this.set(defaultState);
-
         Store.__instance = this;
     }
 

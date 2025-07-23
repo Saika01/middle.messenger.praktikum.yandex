@@ -52,31 +52,31 @@ export function setupFormValidation(form: HTMLFormElement) {
         });
     });
     
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        let isFormValid = true;
+    // form.addEventListener('submit', (e) => {
+    //     e.preventDefault();
+    //     let isFormValid = true;
         
-        fields.forEach(field => {
-            const validation = validateField(field.name, field.value);
-            showValidationMessage(field, validation);
+    //     fields.forEach(field => {
+    //         const validation = validateField(field.name, field.value);
+    //         showValidationMessage(field, validation);
             
-            if (!validation.isValid) {
-                isFormValid = false;
-            }
-        });
+    //         if (!validation.isValid) {
+    //             isFormValid = false;
+    //         }
+    //     });
             
-        if (isFormValid) {
-            const form = e.target as HTMLFormElement;
-            const formData = new FormData(form);
-            const formValues = Object.fromEntries(formData.entries());
-            // await userLoginController.login({
-            //     login: formValues.login,
-            //     password: formValues.password
-            // });
-            console.log(formValues);
-            // form.submit();
-        }
-    });
+    //     if (isFormValid) {
+    //         const form = e.target as HTMLFormElement;
+    //         const formData = new FormData(form);
+    //         const formValues = Object.fromEntries(formData.entries());
+    //         // await userLoginController.login({
+    //         //     login: formValues.login,
+    //         //     password: formValues.password
+    //         // });
+    //         console.log(formValues);
+    //         // form.submit();
+    //     }
+    // });
 }
 
 function showValidationMessage(field: HTMLInputElement, validation: { isValid: boolean; error: string }) {
@@ -90,4 +90,32 @@ function showValidationMessage(field: HTMLInputElement, validation: { isValid: b
     
     errorElement.textContent = validation.error;
     field.classList.toggle('invalid', !validation.isValid);
+}
+
+export function checkIsFormValid(form: HTMLFormElement) {
+    const fields = form.querySelectorAll('input');
+    let isFormValid = true;
+    
+    fields.forEach(field => {
+        const validation = validateField(field.name, field.value);
+        showValidationMessage(field, validation);
+        
+        if (!validation.isValid) {
+            isFormValid = false;
+        }
+    });
+
+    return isFormValid;
+        
+    // if (isFormValid) {
+    //     const form = e.target as HTMLFormElement;
+    //     const formData = new FormData(form);
+    //     const formValues = Object.fromEntries(formData.entries());
+    //     // await userLoginController.login({
+    //     //     login: formValues.login,
+    //     //     password: formValues.password
+    //     // });
+    //     console.log(formValues);
+    //     // form.submit();
+    // }
 }

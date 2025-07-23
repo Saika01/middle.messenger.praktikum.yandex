@@ -29,7 +29,6 @@ export class Router {
     }
 
     use<P>(pathname: string, block: new (props?: P) => Block, props?: P): Router {
-        // const route = new Route(pathname, block, {rootQuery: this._rootQuery, ...(props || {})});
         const fullProps = {
             ...props,
             rootQuery: this._rootQuery
@@ -45,7 +44,6 @@ export class Router {
                 return;
             }
 
-            // const target = event.currentTarget as Window;
             this._onRoute(event.currentTarget.location.pathname);
         }).bind(this);
 
@@ -53,7 +51,6 @@ export class Router {
     }
 
     _onRoute(pathname: string) {
-        console.log(`Navigating to: ${pathname}`);
         const route = this.getRoute(pathname);
         if (!route) {
             return;
@@ -64,14 +61,12 @@ export class Router {
         }
 
         this._currentRoute = route;
-        // route.render(route, pathname);
         route.render();
 
         this._afterRender();
     }
 
     private _afterRender() {
-        // how to get to the root
         const root = document.querySelector(this._rootQuery);
         if (!root) return;
 
@@ -82,6 +77,7 @@ export class Router {
     }
 
     go(pathname: string) {
+        console.log('go');
         this.history.pushState({}, '', pathname);
         this._onRoute(pathname);
     }
