@@ -59,21 +59,23 @@ export class ChatController {
             const response = await this.api.getChat(data);
             // this.store.set({ user: response });
             // window.router.go('/messenger');
+            console.log('response', response);
             const dialogues = response.map(dialogue => { 
                 return new DialogueLine({
                     id: dialogue.id,
-                    name: dialogue.last_message && dialogue.last_message.user.login,
-                    time: dialogue.last_message && dialogue.last_message.time,
-                    isYou: dialogue.last_message && (dialogue.last_message.user.login === currentUser.login),
-                    message: dialogue.last_message && dialogue.last_message.content,
+                    name: dialogue.last_message && dialogue.last_message.user.login || 'name',
+                    time: dialogue.last_message && dialogue.last_message.time || 'time',
+                    isYou: dialogue.last_message && (dialogue.last_message.user.login === currentUser.login) || false,
+                    message: dialogue.last_message && dialogue.last_message.content || 'No messages',
                     isShowQuantity: !!dialogue.unread_count,
                     quantity: dialogue.unread_count,
                     isCurrent: false
                 });
             });
 
-            this.store.set({ dialogues: dialogues});
-            // return dialogues;
+            // this.store.set({ dialogues: dialogues});
+            console.log('dial', dialogues);
+            return dialogues;
         } catch (error) {
             console.error('Chat error:', error);
             this.store.set({ error: 'Ошибка соединения' });

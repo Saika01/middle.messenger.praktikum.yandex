@@ -20,10 +20,19 @@ import ChatApi from '../../api/chats.ts';
 
 // const props = {};
 
+const chatController = new ChatController();
+// const allChats = chatController.allChats({offset: 0, limit: 1, title: ''});
+// console.log(allChats);
+
 class ChatBase extends Block {
     constructor(props?: Record<string, unknown>) {
         // store: Store;
         super(props || {});
+        // this.setProps({dialogues : allChats});
+        // console.log('dfgdfg',this.props);
+        // if (props) {
+        //     props.dialogues = allChats;
+        // }
         // store: Store;
         // this.store = new Store({
         //     chatPage: {
@@ -38,10 +47,43 @@ class ChatBase extends Block {
         
         // Загрузка данных при инициализации
         // this.addToProps();
+        this.loadChats();
+    }
+
+    // async componentDidMount() {
+    //     super.componentDidMount?.();
+    //     await this.loadChats();
+    // }
+
+    private async loadChats() {
+        try {
+            // Загружаем данные асинхронно
+            const chats = await chatController.allChats({
+                offset: 0,
+                limit: 10,
+                title: ''
+            });
+            
+            // Преобразуем данные для отображения
+            // const mappedChats = chats.map(chat => this.mapChatToView(chat));
+            
+            // Обновляем состояние компонента
+            console.log('chats 0', chats[0]);
+            this.setProps({
+                dialogues: chats,
+                // isLoading: false
+            });
+        } catch (error) {
+            this.setProps({
+                error: 'Ошибка загрузки чатов',
+                isLoading: false
+            });
+        }
     }
 
     render(): DocumentFragment {
-        await this.addToProps();
+        // await this.addToProps();
+        console.log('chat props', this.props.dialogues);
         return this._compile(template, this.props);
     }
 
@@ -49,10 +91,10 @@ class ChatBase extends Block {
         super.componentDidMount?.();
     }
 
-    async addToProps() {
-        const chatController = new ChatController();
-        this.props.dialogues = await chatController.allChats({offset: 0, limit: 1, title: ''});
-    }
+    // async addToProps() {
+    //     const chatController = new ChatController();
+    //     this.props.dialogues = await chatController.allChats({offset: 0, limit: 1, title: ''});
+    // }
 }
 
 const withChatError = connect((state) => ({
