@@ -74,7 +74,6 @@ export class WSHandler extends EventBus {
 
         socket.addEventListener('message', (message: MessageEvent<any>) => {
             try {
-                console.log('message', message);
                 const data = JSON.parse(message.data);
 
                 if (['pong', 'user connected'].includes(data?.type)) {

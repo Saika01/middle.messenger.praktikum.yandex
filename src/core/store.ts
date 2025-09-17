@@ -44,7 +44,6 @@ export class Store extends EventBus {
     }
 
     public set(nextState: Partial<State>) {
-        console.log('nest state', nextState);
         const prevState = { ...this.state };
 
         this.state = { ...this.state, ...nextState };

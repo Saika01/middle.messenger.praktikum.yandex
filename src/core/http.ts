@@ -50,7 +50,6 @@ export class HTTPTransport {
     }
 
     put(url: string, options: HTTPTransportOptions = {}): Promise<XMLHttpRequest> {
-        console.log(options);
         return this.request(
             url,
             { ...options, method: METHODS.PUT },
@@ -96,8 +95,6 @@ export class HTTPTransport {
                 }
             }
 
-            console.log(requestUrl);
-
             xhr.open(method, requestUrl);
             xhr.withCredentials = true;
 
@@ -107,7 +104,6 @@ export class HTTPTransport {
 
             xhr.onload = function () {
                 if (xhr.status >= 200 && xhr.status < 300) {
-                    console.log('Успех! Ответ сервера:', xhr.responseText, xhr.status);
                 } else {
                     console.error('Ошибка:', xhr.status, xhr.statusText);
                 }
