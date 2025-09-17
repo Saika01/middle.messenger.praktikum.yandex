@@ -23,7 +23,6 @@ export default class UserApi {
     }
 
     async putAvatar(data: FormData): Promise<PasswordResponse> {
-        console.log(data);
         const response = await userApi.put('/profile/avatar', { 
             data: data
         });

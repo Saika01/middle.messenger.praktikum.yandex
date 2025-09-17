@@ -30,7 +30,6 @@ export class ChangeProfileController {
 
     async changeAvatar(data: { avatar : File }) {
         try {
-            console.log(data);
             const formData = new FormData();
             formData.append('avatar', data.avatar);
             const response = await this.api.putAvatar(formData);
