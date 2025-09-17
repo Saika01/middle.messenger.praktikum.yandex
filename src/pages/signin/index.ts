@@ -17,7 +17,6 @@ class SignInPageBase extends Block {
     }
 }
 
-// Подключаем стор для отображения ошибок
 const withError = connect((state) => ({
     error: state.error,
 }));

@@ -1,27 +1,8 @@
-// import { EventBus } from '../core/event';
-
-// export enum StoreEvents {
-//   Updated = 'updated',
-// }
-
-// class Store extends EventBus {
-//     private state: Indexed = {};
-
-//     public getState() {
-//         // copy state and return in
-//         return this.state;
-//     }
-
-//     public set(path: string, value: unknown) {
-//         set(this.state, path, value);
-//         this.emit(StoreEvents.Updated);
-//     };
-// }
-
-// export default new Store(); 
-
-
 import { EventBus } from './event';
+import type { WSHandler } from './webSocketHandler';
+import { Block } from './block';
+
+type BlockClass = new (props?: Record<string, unknown>) => Block;
 
 export const StoreEvents = {
     Updated : 'Updated',
@@ -31,7 +12,12 @@ type State = {
     isLoading: boolean;
     user: null | Record<string, unknown>;
     error: null | string;
-    dialogues?: unknown[]
+    currentChatInfo?: {
+        id: number,
+        title: string,
+        ws: WSHandler
+    },
+    props: Record<string, [BlockClass, { [key: string]: Block | Object }]>
 };
 
 export class Store extends EventBus {
@@ -39,6 +25,7 @@ export class Store extends EventBus {
         isLoading: false,
         user: null,
         error: null,
+        props: {}
     };
     private static __instance: Store;
 
@@ -57,6 +44,7 @@ export class Store extends EventBus {
     }
 
     public set(nextState: Partial<State>) {
+        console.log('nest state', nextState);
         const prevState = { ...this.state };
 
         this.state = { ...this.state, ...nextState };

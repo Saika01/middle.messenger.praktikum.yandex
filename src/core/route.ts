@@ -50,8 +50,9 @@ export class Route implements RouteInterface {
     render() {
         if (!this._block) {
             this._block = new this._blockClass(this._props);
-            this._block.dispatchComponentDidMount();
             render(this._props.rootQuery as string, this._block);
+            this._block.dispatchComponentDidMount();
+            console.log('despatch in render', this._block);
             return;
         }
 

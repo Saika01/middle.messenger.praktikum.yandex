@@ -2,7 +2,6 @@ import { HTTPTransport } from '../core/http';
 import type {
     CreateUser,
     SignUpResponse,
-    UserDTO,
     SearchUser,
     Passwords,
     PasswordResponse

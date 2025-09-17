@@ -1,12 +1,13 @@
 import { StoreEvents } from '../core/store';
 import { Block } from '../core/block';
-import { isEqual } from './isEqual';
 
 export type Indexed<T = unknown> = {
   [key in string]: T;
 };
 
-export function connect(mapStateToProps: (state: Indexed) => Indexed) {
+type BlockClass = new (props?: Record<string, unknown>) => Block;
+
+export function connect(mapStateToProps: (state: Record<string, [BlockClass, { [key: string]: Block | Object }]>) => Indexed) {
     return function(Component: new (props: Record<string, unknown>) => Block) {
         return class extends Component {
             private __unsubscribe: () => void;
@@ -18,18 +19,13 @@ export function connect(mapStateToProps: (state: Indexed) => Indexed) {
                     throw new Error('Store is not initialized. Make sure you assign window.store before creating components.');
                 }
                 
-                let state = mapStateToProps(store.getState());
+                let state = mapStateToProps(store.getState().props);
 
                 super({...props, ...state});
-                let currentState = state;
 
                 this.__unsubscribe = store.on(StoreEvents.Updated, () => {
-                    const newState = mapStateToProps(store.getState());
-                
-                    if (!isEqual(state, newState)) {
-                        this.setProps({...newState});
-                        currentState = newState;
-                    }
+                    const newState = mapStateToProps(store.getState().props);
+                    this.setProps({...newState});
                 });
             }
 

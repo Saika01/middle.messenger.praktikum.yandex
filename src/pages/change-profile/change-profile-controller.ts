@@ -1,7 +1,7 @@
 import UserApi from '../../api/user';
 import { Store } from '../../core/store';
 
-class ChangeProfileController {
+export class ChangeProfileController {
     private api: UserApi;
     private store: Store;
 
@@ -42,7 +42,3 @@ class ChangeProfileController {
         }
     }
 }
-
-// in order to this.set appear earlier than the controller initialization
-// remove the line and create controller in event (mostly submit)
-export const changeProfileController = new ChangeProfileController();

@@ -51,32 +51,6 @@ export function setupFormValidation(form: HTMLFormElement) {
             showValidationMessage(target, validation);
         });
     });
-    
-    // form.addEventListener('submit', (e) => {
-    //     e.preventDefault();
-    //     let isFormValid = true;
-        
-    //     fields.forEach(field => {
-    //         const validation = validateField(field.name, field.value);
-    //         showValidationMessage(field, validation);
-            
-    //         if (!validation.isValid) {
-    //             isFormValid = false;
-    //         }
-    //     });
-            
-    //     if (isFormValid) {
-    //         const form = e.target as HTMLFormElement;
-    //         const formData = new FormData(form);
-    //         const formValues = Object.fromEntries(formData.entries());
-    //         // await userLoginController.login({
-    //         //     login: formValues.login,
-    //         //     password: formValues.password
-    //         // });
-    //         console.log(formValues);
-    //         // form.submit();
-    //     }
-    // });
 }
 
 function showValidationMessage(field: HTMLInputElement, validation: { isValid: boolean; error: string }) {
@@ -106,16 +80,4 @@ export function checkIsFormValid(form: HTMLFormElement) {
     });
 
     return isFormValid;
-        
-    // if (isFormValid) {
-    //     const form = e.target as HTMLFormElement;
-    //     const formData = new FormData(form);
-    //     const formValues = Object.fromEntries(formData.entries());
-    //     // await userLoginController.login({
-    //     //     login: formValues.login,
-    //     //     password: formValues.password
-    //     // });
-    //     console.log(formValues);
-    //     // form.submit();
-    // }
 }

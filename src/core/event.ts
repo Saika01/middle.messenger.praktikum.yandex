@@ -19,7 +19,7 @@ export class EventBus {
 
     off(event: string, callback: Function) {
         if (!this.listeners[event]) {
-            // throw new Error(`Нет события: ${event}`);
+            throw new Error(`Нет события: ${event}`);
             return;
         }
 

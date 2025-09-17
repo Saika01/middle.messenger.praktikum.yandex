@@ -1,5 +1,4 @@
 import AuthApi from '../../api/auth';
-// import UserApi from '../../api/user';
 import { Store } from '../../core/store';
 
 class LoginError extends Error {
@@ -35,7 +34,6 @@ export class LoginController {
                 this.store.set({ user: response });
                 window.router.go('/messenger');
             } catch (error) {
-                console.error('Get user info:', error);
                 this.store.set({ error: 'Ошибка соединения' });
             }
 
@@ -67,5 +65,3 @@ export class LoginController {
         }
     }
 }
-
-// export const loginController = new LoginController();

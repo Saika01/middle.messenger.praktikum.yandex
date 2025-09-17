@@ -1,4 +1,3 @@
-// import './dialogue-line.css';
 import { Block } from '../../core/block.ts';
 import template from './dialogue-line.hbs?raw';
 

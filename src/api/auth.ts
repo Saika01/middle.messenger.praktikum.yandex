@@ -1,6 +1,5 @@
 import { HTTPTransport } from '../core/http';
 import type {
-    APIError,
     CreateUser,
     LoginRequestData,
     SignUpResponse,
@@ -30,11 +29,12 @@ export default class AuthApi {
         return response;
     }
 
-    async user(): Promise<UserDTO> {
+    async user(): Promise<UserDTO | null> {
         const response = await authApi.get('/user');
         
         if (response.status !== 200) {
-            throw new Error(JSON.parse(response.responseText).reason);
+            console.error(JSON.parse(response.responseText).reason);
+            return null;
         }
         
         return JSON.parse(response.responseText) as UserDTO;

@@ -2,12 +2,12 @@
     <div class="talk__profile">
         <div class="talk__profile__info">
             <div class="talk__profile__info__picture"></div>
-            <div class="talk__profile__info__name">{{talkingData.name}}</div>
+            <div class="talk__profile__info__name">{{name}}</div>
         </div>
         <div class="talk__profile__menu"><img src="kebab.svg" alt="profile menu"></div>
     </div>
     <div class="talk__messages">
-        {{#each talkingData.messages}}
+        {{#each messages}}
             <div class="messages__message {{#if isMine}}messages__message--isMine{{/if}}">
                 <div class="message__text">{{message}}</div>
                 <div class="message__info">

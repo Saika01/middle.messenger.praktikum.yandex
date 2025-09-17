@@ -12,7 +12,6 @@ export abstract class Block {
     } as const;
 
     protected props: Props;
-    // protected template: string;
     protected children: Record<string, Block | Block[]>;
     private eventBus: () => EventBus;
     private _element: HTMLElement | null = null;
@@ -27,7 +26,6 @@ export abstract class Block {
     constructor(propsAndChildren = {}, tagName = 'div') {
         const { children, props } = this._getChildrenAndProps(propsAndChildren);
         this.children = children;
-        // this.template = template;
 
         const eventBus = new EventBus();
         this.eventBus = () => eventBus;
@@ -38,7 +36,7 @@ export abstract class Block {
         };
 
         this._id = makeUUID();
-        this.props = this._makePropsProxy({ ...props, __id: this._id });
+        this.props = { ...props, __id: this._id };
 
         this._registerEvents(eventBus);
         eventBus.emit(Block.EVENTS.INIT);
@@ -136,10 +134,22 @@ export abstract class Block {
             return;
         }
 
-        Object.assign(this.props, nextProps);
+        Object.assign(this._meta.propsAndChildren, nextProps);
+
+        for (const key in nextProps) {
+            const element = nextProps[key];
+            
+            if (Array.isArray(element)) {
+                const childrenArray = this.children[key] as Block[];
+                childrenArray.push(...element);
+                continue;
+            }
+
+            Object.assign(this.props, nextProps);
+        }
 
         if (this.eventBus) {
-            this.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...this.props }, this.props);
+            this.eventBus().emit(Block.EVENTS.FLOW_CDU, {...this.props}, this.props);
         }
     };
 
@@ -248,25 +258,6 @@ export abstract class Block {
         return this.element;
     }
 
-    _makePropsProxy(props: Props) {
-        const self = this;
-
-        return new Proxy(props, {
-            get(target, prop: string) {
-                const value = target[prop];
-                return typeof value === 'function' ? value.bind(target) : value;
-            },
-            set(target, prop: string, value) {
-                target[prop] = value;
-                self.eventBus().emit(Block.EVENTS.FLOW_CDU, [{ ...target }, target]);
-                return true;
-            },
-            deleteProperty() {
-                throw new Error('Нет доступа');
-            },
-        });
-    }
-
     _createDocumentElement(tagName: string) {
         const element = document.createElement(tagName);
         element.classList.add('wrapper');
@@ -282,5 +273,3 @@ export abstract class Block {
         this.getContent()!.style.display = 'none';
     }
 }
-
-// export type BlockType = InstanceType<typeof Block>;
