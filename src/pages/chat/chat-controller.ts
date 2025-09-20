@@ -4,7 +4,6 @@ import AuthApi from '../../api/auth';
 import * as Types from '../../api/type';
 import { Store } from '../../core/store';
 import { DialogueLine } from '../../components/dialogue-line';
-import { TalkingArea } from '../../components/talking-area';
 import { WSHandler } from '../../core/webSocketHandler';
 import { Block } from '../../core/block';
 
@@ -63,38 +62,47 @@ export class ChatController {
             const updatedProps = {...currentState.props};
             const chatData : ChatData = [...updatedProps.chat];
             const chatConfig = { ...chatData[1] };
-            chatConfig.talkingArea = new TalkingArea(talkingAreaParam);
+            chatConfig.talkingAreaInfo = talkingAreaParam;
             chatConfig.isMock = false;
             chatData[1] = chatConfig;
             updatedProps.chat = chatData;
-
+            
             this.store.set({props: updatedProps});
             messagesRecieved();
         });
 
-        ws.on('message', async (data: Record<string, string>) => {
-            const users = JSON.parse((await this.api.getUsers({id: chatId})).responseText);
+        ws.on('message', async (data: Types.Message) => {
+            if (data.type !== 'message') {
+                return;
+            }
 
-            const talkingAreaParam = {
-                name: users[0].first_name,
-                messages: [
-                    {
-                        isMine: data.user_id === userId,
-                        message: data.content,
-                        time: data.time
-                    }
-                ]
-            };
+            type Message = {
+                isMine: boolean;
+                message: string;
+                time: string;
+            }
             
             const currentState = this.store.getState();
             const updatedProps = {...currentState.props};
             const chatData : ChatData = [...updatedProps.chat];
             const chatConfig = { ...chatData[1] };
-            chatConfig.talkingArea = new TalkingArea(talkingAreaParam);
-            chatConfig.isMock = false;
+            const talkingAreaInfo = {...chatConfig.talkingAreaInfo} as { messages?: Message[] };
+            let messages = talkingAreaInfo.messages;
+            
+            messages = [
+                {
+                    isMine: data.user_id === userId,
+                    message: data.content,
+                    time: data.time
+                },
+                ...(messages || []),
+            ];
+
+            talkingAreaInfo.messages = messages;
+            chatConfig.talkingAreaInfo = talkingAreaInfo;
             chatData[1] = chatConfig;
             updatedProps.chat = chatData;
-
+            
             this.store.set({props: updatedProps});
         });
     }
