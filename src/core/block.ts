@@ -134,19 +134,20 @@ export abstract class Block {
             return;
         }
 
+
         Object.assign(this._meta.propsAndChildren, nextProps);
 
-        for (const key in nextProps) {
-            const element = nextProps[key];
-            
-            if (Array.isArray(element)) {
-                const childrenArray = this.children[key] as Block[];
-                childrenArray.push(...element);
-                continue;
+        const { children: newChildren, props: newProps } = this._getChildrenAndProps(nextProps);
+    
+        Object.assign(this.props, newProps);
+        
+        Object.entries(newChildren).forEach(([key, value]) => {
+            if (Array.isArray(value)) {
+                this.children[key] = value;
+            } else {
+                this.children[key] = value;
             }
-
-            Object.assign(this.props, nextProps);
-        }
+        });
 
         if (this.eventBus) {
             this.eventBus().emit(Block.EVENTS.FLOW_CDU, {...this.props}, this.props);

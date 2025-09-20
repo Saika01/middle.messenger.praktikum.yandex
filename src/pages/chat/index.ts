@@ -47,6 +47,7 @@ class ChatBase extends Block {
     componentDidMount() {
         super.componentDidMount?.();
         this.loadChats();
+        this._addEvents();
     }
 }
 
@@ -55,7 +56,8 @@ const mapStateToProps = (props: Record<string, [BlockClass, { [key: string]: Blo
     return {
         dialogues: props.chat[1].dialogues,
         talkingArea: props.chat[1].talkingArea,
-        isMock: props.chat[1].isMock
+        isMock: props.chat[1].isMock,
+        talkingAreaInfo: props.chat[1].talkingAreaInfo
     };
 };
 

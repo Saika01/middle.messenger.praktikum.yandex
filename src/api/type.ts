@@ -90,21 +90,23 @@ export type ChatInfo = {
 }[]
 
 export type Messages = {
-    chat_id: 'number',
-    time: 'string',
-    type: 'string',
-    user_id: 'string',
-    content: 'string',
+    chat_id: number,
+    time: string,
+    type: string,
+    user_id: string,
+    content: string,
     file?: {
-        id: 'number',
-        user_id: 'number',
-        path: 'string',
-        filename: 'string',
-        content_type: 'string',
-        content_size: 'number',
-        upload_date: 'string',
+        id: number,
+        user_id: number,
+        path: string,
+        filename: string,
+        content_type: string,
+        content_size: number,
+        upload_date: string,
     }           
 }[]
+
+export type Message = Messages[number];
 
 export type DataToAddUserToChat = {
     users: number[],

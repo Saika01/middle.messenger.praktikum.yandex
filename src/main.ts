@@ -143,6 +143,9 @@ const props: Record<string, [BlockClass, { [key: string]: Block | Object }]> = {
         dialogues: [],
         isMock: true,
         talkingArea: {},
+        talkingAreaInfo: {
+            messages: []
+        },
         events: {
             'click .menu__plus': () => {
                 const chatController = new ChatController();
@@ -201,8 +204,7 @@ const props: Record<string, [BlockClass, { [key: string]: Block | Object }]> = {
                     currentChatInfo.ws.send(data);
                 }
             },
-        }
-
+        },
     }],
     userProfile: [Pages.Profile, {
         photo: false,
@@ -249,7 +251,7 @@ const props: Record<string, [BlockClass, { [key: string]: Block | Object }]> = {
             color: 'red'
         }),
         events: {
-            'click .button-line.button--blue': () => {
+            'click .info__manage-buttons .wrapper:nth-of-type(1) .button-line.button--blue': () => {
                 window.router.go('/settings');
             },
             'click .info__manage-buttons .wrapper:nth-of-type(2) .button-line.button--blue': () => {
