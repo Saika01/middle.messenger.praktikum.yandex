@@ -47,7 +47,6 @@ class ChatBase extends Block {
     componentDidMount() {
         super.componentDidMount?.();
         this.loadChats();
-        this._addEvents();
     }
 }
 
