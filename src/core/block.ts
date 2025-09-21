@@ -36,7 +36,7 @@ export abstract class Block {
         };
 
         this._id = makeUUID();
-        this.props = this._makePropsProxy({ ...props, __id: this._id });
+        this.props = { ...props, __id: this._id };
 
         this._registerEvents(eventBus);
         eventBus.emit(Block.EVENTS.INIT);
@@ -122,12 +122,36 @@ export abstract class Block {
         return true;
     }
 
+    getProps(): Record<string, any> {
+        return {
+            ...this.props,
+            events: this.props.events
+        };
+    }
+
     setProps = (nextProps: Props) => {
         if (!nextProps) {
             return;
         }
 
-        Object.assign(this.props, nextProps);
+
+        Object.assign(this._meta.propsAndChildren, nextProps);
+
+        const { children: newChildren, props: newProps } = this._getChildrenAndProps(nextProps);
+    
+        Object.assign(this.props, newProps);
+        
+        Object.entries(newChildren).forEach(([key, value]) => {
+            if (Array.isArray(value)) {
+                this.children[key] = value;
+            } else {
+                this.children[key] = value;
+            }
+        });
+
+        if (this.eventBus) {
+            this.eventBus().emit(Block.EVENTS.FLOW_CDU, {...this.props}, this.props);
+        }
     };
 
     get element() {
@@ -227,29 +251,12 @@ export abstract class Block {
         this._listeners = [];
     }
 
-    protected abstract render(): DocumentFragment;
+    render(): DocumentFragment {
+        throw new Error('Render method must be implemented');
+    };
 
-    getContent() {
+    getContent(): HTMLElement | null {
         return this.element;
-    }
-
-    _makePropsProxy(props: Props) {
-        const self = this;
-
-        return new Proxy(props, {
-            get(target, prop: string) {
-                const value = target[prop];
-                return typeof value === 'function' ? value.bind(target) : value;
-            },
-            set(target, prop: string, value) {
-                target[prop] = value;
-                self.eventBus().emit(Block.EVENTS.FLOW_CDU, [{ ...target }, target]);
-                return true;
-            },
-            deleteProperty() {
-                throw new Error('Нет доступа');
-            },
-        });
     }
 
     _createDocumentElement(tagName: string) {

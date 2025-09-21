@@ -51,28 +51,6 @@ export function setupFormValidation(form: HTMLFormElement) {
             showValidationMessage(target, validation);
         });
     });
-    
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        let isFormValid = true;
-        
-        fields.forEach(field => {
-            const validation = validateField(field.name, field.value);
-            showValidationMessage(field, validation);
-            
-            if (!validation.isValid) {
-                isFormValid = false;
-            }
-        });
-            
-        if (isFormValid) {
-            const form = e.target as HTMLFormElement;
-            const formData = new FormData(form);
-            const formValues = Object.fromEntries(formData.entries());
-            console.log(formValues);
-            // form.submit();
-        }
-    });
 }
 
 function showValidationMessage(field: HTMLInputElement, validation: { isValid: boolean; error: string }) {
@@ -86,4 +64,20 @@ function showValidationMessage(field: HTMLInputElement, validation: { isValid: b
     
     errorElement.textContent = validation.error;
     field.classList.toggle('invalid', !validation.isValid);
+}
+
+export function checkIsFormValid(form: HTMLFormElement) {
+    const fields = form.querySelectorAll('input');
+    let isFormValid = true;
+    
+    fields.forEach(field => {
+        const validation = validateField(field.name, field.value);
+        showValidationMessage(field, validation);
+        
+        if (!validation.isValid) {
+            isFormValid = false;
+        }
+    });
+
+    return isFormValid;
 }

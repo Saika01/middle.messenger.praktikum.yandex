@@ -1,9 +1,24 @@
 import './signin.css';
 import { Block } from '../../core/block.ts';
 import template from './signin.hbs?raw';
+import { connect } from '../../utils/connect';
 
-export class SignInPage extends Block {
-    render() {
+class SignInPageBase extends Block {
+    constructor(props?: Record<string, unknown>) {
+        super(props || {});
+    }
+
+    render(): DocumentFragment {
         return this._compile(template, this.props);
     }
+
+    componentDidMount() {
+        super.componentDidMount?.();
+    }
 }
+
+const withError = connect((state) => ({
+    error: state.error,
+}));
+
+export const SignInPage = withError(SignInPageBase);

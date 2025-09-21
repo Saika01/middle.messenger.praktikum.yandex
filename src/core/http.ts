@@ -5,6 +5,8 @@ const METHODS = {
     DELETE: 'DELETE',
 };
 
+const BASE_API_URL = 'https://ya-praktikum.tech/api/v2';
+
 function queryStringify(data: Record<string, string | number | boolean>): string {
     if (typeof data !== 'object' || data === null) {
         throw new Error('Data must be object');
@@ -18,13 +20,19 @@ function queryStringify(data: Record<string, string | number | boolean>): string
     }, '?');
 }
 
-type HTTPTransportOptions = {
+export type HTTPTransportOptions = {
   headers?: Record<string, string>;
-  data?: Record<string, unknown> | FormData | URLSearchParams | string;
+  data?: XMLHttpRequestBodyInit | Record<string, unknown> | null;
   timeout?: number;
 };
 
 export class HTTPTransport {
+    endpoint: string;
+    
+    constructor(endpoint: string) {
+        this.endpoint = BASE_API_URL + endpoint;
+    }
+
     get(url: string, options: HTTPTransportOptions = {}): Promise<XMLHttpRequest> {
         return this.request(
             url,
@@ -77,22 +85,28 @@ export class HTTPTransport {
             const xhr = new XMLHttpRequest();
             const isGet = method === METHODS.GET;
 
-            let requestUrl = url;
+            let requestUrl = `${this.endpoint}${url}`;
+
             if (isGet && data) {
                 if (this.isPlainObject(data)) {
-                    requestUrl = `${url}${queryStringify(data as Record<string, string | number | boolean>)}`;
+                    requestUrl = `${requestUrl}${queryStringify(data as Record<string, string | number | boolean>)}`;
                 } else if (typeof data === 'string') {
-                    requestUrl = `${url}?${data}`;
+                    requestUrl = `${requestUrl}?${data}`;
                 }
             }
 
             xhr.open(method, requestUrl);
+            xhr.withCredentials = true;
 
             Object.keys(headers).forEach((key) => {
                 xhr.setRequestHeader(key, headers[key]);
             });
 
             xhr.onload = function () {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                } else {
+                    console.error('Ошибка:', xhr.status, xhr.statusText);
+                }
                 resolve(xhr);
             };
 
@@ -104,6 +118,11 @@ export class HTTPTransport {
 
             if (isGet || !data) {
                 xhr.send();
+            } else if (data instanceof FormData) {
+                xhr.send(data);
+            } else if (this.isPlainObject(data)) {
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify(data));
             } else {
                 xhr.send(data as XMLHttpRequestBodyInit);
             }

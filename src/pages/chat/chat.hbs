@@ -1,24 +1,15 @@
 <div class="chat">
     <div class="chat__managing-area">
         <div class="managing-area__menu">
-            <a href="#" page="userProfile"><div class="menu__profile">Профиль<img src="arrow.svg" alt="arrow"></div></a>
+            <div class="menu__buttons">
+                <a href="#" class="menu__plus"><img src="plus.svg" alt="plus"></a>
+                <a href="/profile" page="userProfile"><div class="menu__profile">Профиль<img src="arrow.svg" alt="arrow"></div></a>
+            </div>
             <div class="menu_search"><img src="magnifier.svg" alt="magnifier">Поиск</div>
         </div>
         <div class="managing-area__dialogues">
             {{#each dialogues}}
-                <div class="dialogues__dialogue {{#if isCurrent}}dialogues__dialogue--isCurrent{{/if}}">
-                    <div class="dialogue__picture"></div>
-                    <div class="dialogue__info">
-                        <div class="info__name-and-time">
-                            <div class="name-and-time__name">{{name}}</div>
-                            <div class="name-and-time__time">{{time}}</div>
-                        </div>
-                        <div class="info__message-info">
-                            <div class="message-info__message">{{#if isYou}}<span>Вы:&nbsp;</span>{{/if}}{{message}}</div>
-                            {{#if isShowQuantity}}<div class="message-info__quantity">{{quantity}}</div>{{/if}}
-                        </div>
-                    </div>
-                </div>
+                {{{ this }}}
             {{/each}}
         </div>
     </div>
@@ -26,7 +17,29 @@
         {{#if isMock}}
             <div class="talking-area__mock">Выберите чат чтобы отправить сообщение</div>
         {{else}}
-            {{{ talkingArea }}}
+            <div class="talking-area__talk">
+                <div class="talk__profile">
+                    <div class="talk__profile__info">
+                        <div class="talk__profile__info__picture"></div>
+                        <div class="talk__profile__info__name">{{talkingAreaInfo.name}}</div>
+                    </div>
+                    <div class="talk__profile__menu"><img src="kebab.svg" alt="profile menu"></div>
+                </div>
+                <div class="talk__messages">
+                    {{#each talkingAreaInfo.messages}}
+                        <div class="messages__message {{#if isMine}}messages__message--isMine{{/if}}">
+                            <div class="message__text">{{message}}</div>
+                            <div class="message__info">
+                                <div class="info__time {{#if isMine}}info__time--isMine{{/if}}">{{time}}</div>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+                <form class="talk__send-interface">
+                    <input type="text" placeholder="Сообщение" name="message" class="send-interface__field"></input>
+                    <button type="submit" class="send-interface__button"><img src="arrow-send.svg" alt="arrow"></button>
+                </form>
+            </div>
         {{/if}}
     </div>
 </div>
