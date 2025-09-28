@@ -1,0 +1,34 @@
+// src/core/test/setup.mjs
+import { JSDOM } from 'jsdom';
+
+const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>', {
+  url: 'http://localhost',
+  pretendToBeVisual: true,
+  resources: 'usable'
+});
+
+// В ESM используем globalThis вместо global
+globalThis.document = dom.window.document;
+globalThis.window = dom.window;
+globalThis.HTMLElement = dom.window.HTMLElement;
+globalThis.DocumentFragment = dom.window.DocumentFragment;
+globalThis.Event = dom.window.Event;
+globalThis.MouseEvent = dom.window.MouseEvent;
+
+// Копируем все свойства window в globalThis
+Object.keys(dom.window).forEach((property) => {
+  if (typeof globalThis[property] === 'undefined') {
+    globalThis[property] = dom.window[property];
+  }
+});
+
+// Для симуляции requestAnimationFrame
+globalThis.requestAnimationFrame = (callback) => {
+  return setTimeout(callback, 0);
+};
+
+globalThis.cancelAnimationFrame = (id) => {
+  clearTimeout(id);
+};
+
+console.log('JSDOM setup completed');

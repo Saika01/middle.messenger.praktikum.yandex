@@ -1,0 +1,9 @@
+{
+    "reporter": "spec",
+    "timeout": 5000,
+    "loader": "ts-node/esm",
+    "extension": ["ts"],
+    "spec": "src/core/test/**/*.spec.ts",
+    "require": ["src/core/test/setup.js"],
+    "exit": true
+}

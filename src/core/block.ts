@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
 import { v4 as makeUUID } from 'uuid';
-import { EventBus } from './event';
+import { EventBus } from './event.ts';
 
 type Props = Record<string, unknown>;
 export abstract class Block {
