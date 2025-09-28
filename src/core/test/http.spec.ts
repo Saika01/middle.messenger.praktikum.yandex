@@ -1,9 +1,7 @@
-// test/unit/http-transport.spec.ts
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { HTTPTransport } from '../http.ts';
 
-// Интерфейсы для типизации
 interface MockFormDataInterface {
     append(key: string, value: unknown): void;
     get(key: string): unknown;
@@ -25,7 +23,6 @@ interface MockXMLHttpRequestInterface {
     response: string;
 }
 
-// Типизированный MockFormData
 class MockFormData implements MockFormDataInterface {
     private data: Map<string, unknown> = new Map();
     
@@ -40,7 +37,6 @@ class MockFormData implements MockFormDataInterface {
     [Symbol.toStringTag] = 'FormData';
 }
 
-// Простой мок XMLHttpRequest
 function createMockXHR(): MockXMLHttpRequestInterface {
     const mock: MockXMLHttpRequestInterface = {
         open: sinon.stub(),
@@ -68,11 +64,8 @@ describe('HTTPTransport', () => {
     beforeEach(() => {
         sandbox = sinon.createSandbox();
         mockXHR = createMockXHR();
-        
-        // Сохраняем оригинальный XMLHttpRequest
         originalXMLHttpRequest = global.XMLHttpRequest;
         
-        // Создаем простой мок конструктора с типизацией
         global.XMLHttpRequest = class {
             constructor() {
                 return mockXHR as unknown as XMLHttpRequest;
@@ -102,7 +95,6 @@ describe('HTTPTransport', () => {
         it('должен отправлять GET запрос без данных', async () => {
             const promise = http.get('/path');
             
-            // Имитируем успешный ответ
             if (mockXHR.onload) {
                 mockXHR.onload();
             }
@@ -236,14 +228,10 @@ describe('HTTPTransport with FormData', () => {
         sandbox = sinon.createSandbox();
         mockXHR = createMockXHR();
         
-        // Сохраняем оригинальные конструкторы
         originalFormData = global.FormData;
         originalXMLHttpRequest = global.XMLHttpRequest;
-        
-        // Подменяем FormData
         global.FormData = MockFormData as unknown as typeof FormData;
         
-        // Подменяем XMLHttpRequest
         global.XMLHttpRequest = class {
             constructor() {
                 return mockXHR as unknown as XMLHttpRequest;
@@ -255,7 +243,6 @@ describe('HTTPTransport with FormData', () => {
 
     afterEach(() => {
         sandbox.restore();
-        // Восстанавливаем оригинальные конструкторы
         global.FormData = originalFormData;
         global.XMLHttpRequest = originalXMLHttpRequest;
     });
@@ -266,7 +253,6 @@ describe('HTTPTransport with FormData', () => {
         
         const promise = http.post('/path', { data: formData as unknown as FormData });
         
-        // Даем время на обработку
         await new Promise(resolve => setTimeout(resolve, 10));
         
         if (mockXHR.onload) {
@@ -296,7 +282,6 @@ describe('HTTPTransport query parameters', () => {
     it('должен корректно формировать URL с параметрами', async () => {
         const mockXHR = createMockXHR();
         
-        // Подменяем XMLHttpRequest
         global.XMLHttpRequest = class {
             constructor() {
                 return mockXHR as unknown as XMLHttpRequest;

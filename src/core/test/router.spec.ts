@@ -1,4 +1,3 @@
-// test/unit/router.spec.ts
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { JSDOM } from 'jsdom';
@@ -66,8 +65,7 @@ describe('Router', () => {
             writable: true,
             configurable: true
         });
-        // @ts-ignore in order to have access to the private property
-        (Router as any).__instance = null;
+        (Router as unknown as { __instance: Router | null }).__instance = null;
     });
 
     describe('Singleton pattern', () => {
