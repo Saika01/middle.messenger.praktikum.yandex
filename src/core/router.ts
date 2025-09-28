@@ -1,6 +1,6 @@
-import { Route } from './route';
-import { setupFormValidation } from './validation';
-import { Block } from './block';
+import { Route } from './route.ts';
+import { setupFormValidation } from './validation.ts';
+import { Block } from './block.ts';
 
 export interface RouteInterface {
   render: () => void;

@@ -1,4 +1,4 @@
-import './change-password.css';
+import './change-password.scss';
 import { Block } from '../../core/block.ts';
 import template from './change-password.hbs?raw';
 import { connect } from '../../utils/connect';

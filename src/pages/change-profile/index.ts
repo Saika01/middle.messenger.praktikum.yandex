@@ -1,4 +1,4 @@
-import './change-profile.css';
+import './change-profile.scss';
 import template from './change-profile.hbs?raw';
 import { Block } from '../../core/block.ts';
 import { Input } from '../../components/input/index.ts';
