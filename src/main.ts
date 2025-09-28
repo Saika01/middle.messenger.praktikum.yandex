@@ -275,6 +275,7 @@ const props: Record<string, [BlockClass, { [key: string]: Block | Object }]> = {
                     type: 'text',
                     attribute: 'Почта',
                     name: 'email',
+                    placeholder: ''
                 }),
                 value: 'pochta@yandex.ru',
             },
@@ -283,6 +284,7 @@ const props: Record<string, [BlockClass, { [key: string]: Block | Object }]> = {
                     type: 'text',
                     attribute: 'Логин',
                     name: 'login',
+                    placeholder: ''
                 }),
                 value: 'ivanivanov',
             },
@@ -291,6 +293,7 @@ const props: Record<string, [BlockClass, { [key: string]: Block | Object }]> = {
                     type: 'text',
                     attribute: 'Имя',
                     name: 'first_name',
+                    placeholder: ''
                 }),
                 value: 'Иван',
             },
@@ -299,6 +302,7 @@ const props: Record<string, [BlockClass, { [key: string]: Block | Object }]> = {
                     type: 'text',
                     attribute: 'Фамилия',
                     name: 'second_name',
+                    placeholder: ''
                 }),
                 value: 'Иванов',
             },
@@ -307,6 +311,7 @@ const props: Record<string, [BlockClass, { [key: string]: Block | Object }]> = {
                     type: 'text',
                     attribute: 'Имя в чате',
                     name: 'display_name',
+                    placeholder: ''
                 }),
                 value: 'Иван',
             },
@@ -315,6 +320,7 @@ const props: Record<string, [BlockClass, { [key: string]: Block | Object }]> = {
                     type: 'text',
                     attribute: 'Телефон',
                     name: 'phone',
+                    placeholder: ''
                 }),
                 value: '+7 (909) 967 30 30',
             },
@@ -322,7 +328,8 @@ const props: Record<string, [BlockClass, { [key: string]: Block | Object }]> = {
         avatarInput: new Components.Input({
             type: 'file',
             label: 'Выбрать изображение',
-            name: 'avatar'
+            name: 'avatar',
+            placeholder: ''
         }),
         saveButton: new Components.Button({
             type: 'confirm',
