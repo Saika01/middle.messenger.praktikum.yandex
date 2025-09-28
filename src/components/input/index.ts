@@ -1,4 +1,4 @@
-import './input.css';
+import './input.scss';
 import { Block } from '../../core/block.ts';
 import template from './input.hbs?raw';
 

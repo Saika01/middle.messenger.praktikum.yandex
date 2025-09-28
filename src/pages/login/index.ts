@@ -1,4 +1,4 @@
-import './login.css';
+import './login.scss';
 import template from './login.hbs?raw';
 import { Block } from '../../core/block';
 import { connect } from '../../utils/connect';

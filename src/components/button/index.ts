@@ -1,4 +1,4 @@
-import './button.css';
+import './button.scss';
 import { Block } from '../../core/block.ts';
 import template from './button.hbs?raw';
 

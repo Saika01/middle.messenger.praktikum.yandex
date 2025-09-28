@@ -6,13 +6,6 @@ export default defineConfig({
     build: {
         outDir: 'dist',
     },
-    css: {
-        preprocessorOptions: {
-            scss: {
-                additionalData: '@import "./src/styles/vars.scss";',
-            },
-        },
-    },
     preview: {
         port: 3000,
     },
