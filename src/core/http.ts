@@ -107,7 +107,7 @@ export class HTTPTransport {
                 } else {
                     console.error('Ошибка:', xhr.status, xhr.statusText);
                 }
-                resolve(xhr)
+                resolve(xhr);
             };
 
             xhr.onabort = reject;
