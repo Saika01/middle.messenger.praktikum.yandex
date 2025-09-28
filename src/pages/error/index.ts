@@ -1,4 +1,4 @@
-import './error.css';
+import './error.scss';
 import { Block } from '../../core/block.ts';
 import template from './error.hbs?raw';
 import { connect } from '../../utils/connect';

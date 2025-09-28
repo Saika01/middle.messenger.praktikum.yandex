@@ -1,4 +1,4 @@
-import './profile.css';
+import './profile.scss';
 import { Block } from '../../core/block.ts';
 import template from './profile.hbs?raw';
 import { connect } from '../../utils/connect';

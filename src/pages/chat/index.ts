@@ -1,4 +1,4 @@
-import './chat.css';
+import './chat.scss';
 import { Block } from '../../core/block.ts';
 import template from './chat.hbs?raw';
 import { connect } from '../../utils/connect';

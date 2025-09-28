@@ -1,4 +1,4 @@
-import './navigation.css';
+import './navigation.scss';
 import { Block } from '../../core/block.ts';
 import template from './navigation.hbs?raw';
 

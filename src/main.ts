@@ -1,4 +1,4 @@
-import './style.css';
+import './style.scss';
 import { Block } from './core/block';
 import { checkIsFormValid } from './core/validation';
 import * as Components from './components';

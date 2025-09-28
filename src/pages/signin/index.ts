@@ -1,4 +1,4 @@
-import './signin.css';
+import './signin.scss';
 import { Block } from '../../core/block.ts';
 import template from './signin.hbs?raw';
 import { connect } from '../../utils/connect';
