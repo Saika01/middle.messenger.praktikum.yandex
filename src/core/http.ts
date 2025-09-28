@@ -105,7 +105,7 @@ export class HTTPTransport {
             xhr.onload = function () {
                 if (xhr.status >= 200 && xhr.status < 300) {
                 } else {
-                    console.error('Ошибка:', xhr.status, xhr.statusText);
+                    console.error('Ошибка:', xhr.status, xhr.statusText)
                 }
                 resolve(xhr);
             };
